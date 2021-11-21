@@ -2,6 +2,10 @@
 ACMS60212 Final Project for 21Fall
 
 
+Studies of bacterial branching growth using reaction–diffusion models for colonial development.
+refer repo: 
+https://github.com/benmaier/reaction-diffusion
+
 Team members:
 
 Jiale Shi, jshi1@nd.edu
