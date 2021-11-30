@@ -9,7 +9,7 @@ Studies of bacterial branching growth using reaction–diffusion models for colo
 refer repo: 
 https://github.com/benmaier/reaction-diffusion
 
-
+cuBLAS should be useful for this project. 
 
 Team members:
 
