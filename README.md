@@ -9,6 +9,8 @@ Studies of bacterial branching growth using reaction–diffusion models for colo
 refer repo: 
 https://github.com/benmaier/reaction-diffusion
 
+
+
 Team members:
 
 Jiale Shi, jshi1@nd.edu
