@@ -15,6 +15,8 @@
 using namespace std;
 
 
+int save_write(float*, float*, int);
+
 int discrete_laplacian(float*, float*, int);
 
 int get_initial_configuration(float*, float*, int, float);
@@ -115,12 +117,61 @@ int main(int argc, char *argv[])
         }
         cout << endl;
         cout << endl;
+
+      save_write(A,B,N);
       free(A);
       free(B);
       //free(TEMP);
 
       return 0;
 }
+
+int save_write(float *A, float *B , int N)
+{
+   
+
+    // open a file in write mode.
+    std::ofstream outfileA;
+    outfileA.open("Output_A.txt");
+
+    int i,j;
+    //outfile << "Solution vector:" << std::endl;
+    for(i = 0; i <N; i++)
+    {
+        for (j = 0; j<N; j++)
+        {
+           outfileA << A[i*N+j] <<" ";
+        }
+        outfileA<<std::endl;
+    }    
+        outfileA<<std::endl;
+
+   // close the opened file.
+   outfileA.close();
+
+    // open a file in write mode.
+    std::ofstream outfileB;
+    outfileB.open("Output_B.txt");
+
+    //outfile << "Solution vector:" << std::endl;
+    for(i = 0; i <N; i++)
+    {
+        for (j = 0; j<N; j++)
+        {
+           outfileB << B[i*N+j] <<" ";
+        }
+        outfileB<<std::endl;
+    }    
+        outfileB<<std::endl;
+
+   // close the opened file.
+   outfileB.close();
+
+
+
+    return 0;
+}
+
 
 int discrete_laplacian(float* Matrix, float* Matrix_laplacian, int N)
 {
