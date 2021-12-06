@@ -15,7 +15,7 @@
 using namespace std;
 
 
-int save_write(float*, float*, int);
+int save_write(float*, float*, int, string);
 
 int discrete_laplacian(float*, float*, int);
 
@@ -30,23 +30,23 @@ int main(int argc, char *argv[])
         float delta_t = 1.0;
         
         // Diffusion coefficients
-        float DA = 0.16;
-        float DB = 0.08;
+        float DA = 0.14;
+        float DB = 0.06;
 
         // define feed/kill rates
-        float f = 0.060;
-        float k = 0.062;
+        float f = 0.035;
+        float k = 0.065;
 
         // grid size
-        int N = 100;
+        int N = 200;
         
         // simulation steps
-        int N_simulation_steps = 200;
+        int N_simulation_steps = 10000;
         float random_influence = 0.2;
 
         float  *A, *B;
         
-        float *TEMP;        
+        //float *TEMP;        
         
         A = (float *)malloc(N * N * sizeof(float));
         B = (float *)malloc(N * N * sizeof(float));
@@ -59,30 +59,7 @@ int main(int argc, char *argv[])
         // initialize A and B
         get_initial_configuration(A, B, N, random_influence);
        
-        for(i=0; i < N; i++)
-        {
-            for (j =0; j<N; j++)
-            {
-                 cout << A[i*N+j] << " ";
-            }
-            cout << endl;
-        }
-        cout << endl;
-        cout << endl;
- 
-        for(i=0; i < N; i++)
-        {
-            for (j =0; j<N; j++)
-            {
-                cout << B[i*N+j] << " ";
-            }
-            cout << endl;
-        }
-        cout << endl;
-        cout << endl;
- 
-
-
+        save_write(A,B,N, "Input");
         // update A and B
         for (i=0; i<N_simulation_steps;i++)
         {
@@ -90,49 +67,23 @@ int main(int argc, char *argv[])
                gray_scott_update(A,B, DA, DB, f, k, delta_t, N);    
         }
         
-        cout <<"-------------------------------------" << endl;
-        cout <<"-------------------------------------" << endl;
-        cout << "Final Results for A" << endl;
-        for(i=0; i < N; i++)
-        {
-            for (j =0; j<N; j++)
-            {
-                 cout << A[i*N+j] << " ";
-            }
-            cout << endl;
-        }
-        cout << endl;
-        cout << endl;
- 
-        cout <<"-------------------------------------" << endl;
-        cout <<"-------------------------------------" << endl;
-        cout << "Final Results for A" << endl;
-        for(i=0; i < N; i++)
-        {
-            for (j =0; j<N; j++)
-            {
-                cout << B[i*N+j] << " ";
-            }
-            cout << endl;
-        }
-        cout << endl;
-        cout << endl;
-
-      save_write(A,B,N);
-      free(A);
-      free(B);
+        cout << "Save the output" << endl;
+        save_write(A,B,N, "Output");
+        free(A);
+        free(B);
       //free(TEMP);
 
       return 0;
 }
 
-int save_write(float *A, float *B , int N)
+int save_write(float *A, float *B , int N, string Str)
 {
    
 
     // open a file in write mode.
     std::ofstream outfileA;
-    outfileA.open("Output_A.txt");
+    string stringA = Str+"A";
+    outfileA.open(stringA);
 
     int i,j;
     //outfile << "Solution vector:" << std::endl;
@@ -151,7 +102,8 @@ int save_write(float *A, float *B , int N)
 
     // open a file in write mode.
     std::ofstream outfileB;
-    outfileB.open("Output_B.txt");
+    string stringB = Str+"B";
+    outfileB.open(stringB);
 
     //outfile << "Solution vector:" << std::endl;
     for(i = 0; i <N; i++)
@@ -162,7 +114,7 @@ int save_write(float *A, float *B , int N)
         }
         outfileB<<std::endl;
     }    
-        outfileB<<std::endl;
+        //outfileB<<std::endl;
 
    // close the opened file.
    outfileB.close();
