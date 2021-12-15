@@ -1,8 +1,8 @@
 # ACMS60212FinalProject21Fall
 ACMS60212 Final Project for 21Fall
 
-Doc:
-https://docs.google.com/document/d/1EYmjYmHQRPzuSFhtbL6WMqSUt04kd5GqNkROXnzzkdE/edit?usp=sharing
+Github Repo：
+https://github.com/shijiale0609/ACMS60212FinalProject21Fall
 
 
 Studies of bacterial branching growth using reaction–diffusion models for colonial development.
