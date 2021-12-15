@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 #define N 200
-#define BLOCK_SIZE  32
+#define BLOCK_SIZE  16
 
 __global__ void discrete_laplacian(double* M, double* L){
     /*
