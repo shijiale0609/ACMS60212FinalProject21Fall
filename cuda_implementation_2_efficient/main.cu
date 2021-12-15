@@ -9,7 +9,7 @@ __global__ void discrete_laplacian(double* M, double* L){
     /*
     (GPU) calculates laplacian value for each matrix element
     */
-    int tid = blockIdx.x; // handle the data at this index
+    int tid = threadIdx.x + blockIdx.x*blockDim.x; //blockIdx.x; // handle the data at this index
     if (tid < N*N) {
         L[tid] = (-4) * M[tid];
         if (tid%N!=0) {
@@ -32,6 +32,8 @@ __global__ void discrete_laplacian(double* M, double* L){
         } else {
             L[tid] += M[tid-N*N+N];
         }
+      
+        tid += blockDim.x * gridDim.x;
     }
 }
 
@@ -39,9 +41,10 @@ __global__ void diff_Matrix_A(double* dev_A, double* dev_B, double* LA, double* 
     /*
     (GPU) calculates the changes of each matrix element of A
     */
-    int tid = blockIdx.x; // handle the data at this index
+    int tid = threadIdx.x + blockIdx.x*blockDim.x; //blockIdx.x; // handle the data at this index
     if (tid < N*N) {
         diff_A[tid] = (DA*LA[tid] - dev_A[tid]*dev_B[tid]*dev_B[tid] + f*(1-dev_A[tid])) * delta_t;
+        tid += blockDim.x * gridDim.x;
     }
 }
 
@@ -49,9 +52,10 @@ __global__ void diff_Matrix_B(double* dev_A, double* dev_B, double* LB, double* 
     /*
     (GPU) calculates the changes of each matrix element of A
     */
-    int tid = blockIdx.x; // handle the data at this index
+    int tid = threadIdx.x + blockIdx.x*blockDim.x; //blockIdx.x; // handle the data at this index
     if (tid < N*N) {
         diff_B[tid] = (DB*LB[tid] + dev_A[tid]*dev_B[tid]*dev_B[tid] - (k+f)*dev_B[tid]) * delta_t;
+        tid += blockDim.x * gridDim.x;
     }
 }
 
@@ -59,9 +63,10 @@ __global__ void add2to1(double* M1, double* M2){
     /*
     (GPU) adds each matrix element of M2 to each element of M1
     */
-    int tid = blockIdx.x; // handle the data at this index
+    int tid = threadIdx.x + blockIdx.x*blockDim.x; //blockIdx.x; // handle the data at this index
     if (tid < N*N) {
         M1[tid] += M2[tid];
+        tid += blockDim.x * gridDim.x;
     }
 }
 
